@@ -13,7 +13,6 @@ const IndexPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Footer />
-      {/* <Counter /> */}
     </div>
   );
 };

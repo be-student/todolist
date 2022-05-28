@@ -1,0 +1,19 @@
+.headerBox {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 2px solid #f1f2f6;
+}
+.headerButton {
+  width: 130px;
+  height: 100%;
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+  text-decoration: none;
+}
+.headerButton:hover {
+  background-color: #f1f2f6;
+}
