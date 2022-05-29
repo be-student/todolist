@@ -23,3 +23,6 @@ pnpm create next-app --example with-redux with-redux-app
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+
+1. 이상했던 점 date calculate 가 새로고침시 작동하지 않음
+2. redux 에 filter 라는 거를 만들고, 이를 필터링 하는 함수를 받아서 처리한다 라고 하는 애매모한 걸로 처리하는건 어떤가?

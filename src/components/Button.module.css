@@ -17,3 +17,10 @@
 .headerButton:hover {
   background-color: #f1f2f6;
 }
+
+.plusButton {
+  width: 150px;
+  border: none;
+  margin-top: 5px;
+  border-radius: 5px;
+}

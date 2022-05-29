@@ -1,16 +1,39 @@
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  checkComplete,
+  checkNotComplete,
+  selectComplete,
+  selectNotComplete,
+} from "../task/taskSlice";
 import styles from "./Footer.module.css";
+
 const Footer = () => {
-  const checkBox = () => {
-    setCheck((prev) => !prev);
-  };
-  const [check, setCheck] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const complete = useAppSelector(selectComplete);
+  const notComplete = useAppSelector(selectNotComplete);
   return (
     <div className={styles.footerBox}>
-      <div>
-        완료된 일만 보기
-        <input onChange={checkBox} checked={check} type="checkbox"></input>
+      <div className={styles.footerItem}>
+        미완료 일
+        <input
+          onChange={() => {
+            dispatch(checkNotComplete());
+          }}
+          checked={notComplete}
+          type="checkbox"
+        ></input>
       </div>
+      <div className={styles.footerItem}>
+        완료된 일
+        <input
+          onChange={() => {
+            dispatch(checkComplete());
+          }}
+          checked={complete}
+          type="checkbox"
+        ></input>
+      </div>
+      <div className={styles.footerItem}>완료된 일 지우기</div>
     </div>
   );
 };
