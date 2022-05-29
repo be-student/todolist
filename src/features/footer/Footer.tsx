@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   checkComplete,
   checkNotComplete,
+  deleteCompletedTask,
   selectComplete,
   selectNotComplete,
 } from "../task/taskSlice";
@@ -33,7 +34,14 @@ const Footer = () => {
           type="checkbox"
         ></input>
       </div>
-      <div className={styles.footerItem}>완료된 일 지우기</div>
+      <button
+        onClick={() => {
+          dispatch(deleteCompletedTask());
+        }}
+        className={styles.footerItem}
+      >
+        제거 완료
+      </button>
     </div>
   );
 };

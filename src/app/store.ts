@@ -25,6 +25,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: "test",
   storage,
+  whitelist: ["task"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
