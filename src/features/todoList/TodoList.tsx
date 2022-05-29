@@ -8,7 +8,7 @@ const TodoList = ({ type, setId }) => {
     <div className={styles.todoListBox}>
       {todoList &&
         todoList.map((todoItem) => {
-          return <TodoItem todoItem={todoItem} />;
+          return <TodoItem key={todoItem.id} todoItem={todoItem} />;
         })}
     </div>
   );

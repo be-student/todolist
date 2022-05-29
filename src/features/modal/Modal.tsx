@@ -1,33 +1,39 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAppDispatch, useInput } from "../../app/hooks";
 import styles from "./Modal.module.css";
 import Calendar from "react-calendar";
 import moment from "moment";
 import { addTask } from "../task/taskSlice";
 const Modal = ({ setModal }) => {
-  const dispatch=useAppDispatch();
+  const dispatch = useAppDispatch();
   const title = useInput("");
   const [goalAt, setGoalAt] = useState<Date>(new Date());
   const description = useInput("");
   const [complete, setComplete] = useState<boolean>(false);
-  const onSubmit=()=>{
-    if(title.value===""){
+  const Selector: JSX.Element = useMemo(
+    () => <Calendar value={goalAt} onChange={setGoalAt}></Calendar>,
+    [Calendar, goalAt, setGoalAt]
+  );
+  const onSubmit = () => {
+    if (title.value === "") {
       alert("please enter title");
       return;
     }
-    if(description.value===""){
+    if (description.value === "") {
       alert("please enter description");
       return;
     }
-    console.log(typeof new Date(goalAt).valueOf());
-    dispatch(addTask({
-      title:"testing Task",
-      description:"testing Description",
-      goalAt:new Date(goalAt),
-      Complete:true,
-      tag:[]
-    }))
-  }
+    dispatch(
+      addTask({
+        title: title.value,
+        description: description.value,
+        goalAt: goalAt.valueOf(),
+        Complete: complete,
+        tag: [],
+      })
+    );
+    setModal(false);
+  };
   return (
     <div className={styles.ModalWrapper}>
       <div className={styles.ModalItem}>
@@ -50,13 +56,13 @@ const Modal = ({ setModal }) => {
             required
           />
         </div>
-        <div style={{height:"250px"}}>
+        <div style={{ height: "300px" }}>
           <span>Goal {moment(goalAt).format("YYYY-MM-DD")}</span>
-          <Calendar  value={goalAt} onChange={setGoalAt}></Calendar>
+          <Calendar value={goalAt} onChange={setGoalAt}></Calendar>
         </div>
 
         <div>
-          <span>Complete </span>
+          <span>Complete</span>
           <input
             checked={complete}
             onChange={() => {
@@ -67,11 +73,9 @@ const Modal = ({ setModal }) => {
         </div>
 
         <div>
-          <span>Tag</span>          
+          <span>Tag</span>
         </div>
-        <div>
-                  
-        </div>
+        <div></div>
         <div>
           <button onClick={onSubmit}>submit</button>
         </div>

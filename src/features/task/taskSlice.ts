@@ -8,8 +8,8 @@ export interface tasks {
   description: string;
   tag: Array<string>;
   complete: boolean;
-  createdAt: Date;
-  goalAt: Date;
+  createdAt: number;
+  goalAt: number;
 }
 
 export interface CheckedState {
@@ -28,8 +28,8 @@ const initialState: CheckedState = {
       description: "task description",
       tag: ["tag1", "tag2"],
       complete: false,
-      createdAt: new Date(),
-      goalAt: new Date(new Date().valueOf() + 1000 * 60 * 60 * 24 * 2),
+      createdAt: new Date().valueOf(),
+      goalAt: new Date().valueOf() + 1000 * 60 * 60 * 24 * 2,
     },
     {
       id: 2,
@@ -37,8 +37,8 @@ const initialState: CheckedState = {
       description: "task2 description",
       tag: ["tag2", "tag3"],
       complete: true,
-      createdAt: new Date(),
-      goalAt: new Date(new Date().valueOf() + 1000 * 60 * 60 * 24 * 4),
+      createdAt: new Date().valueOf(),
+      goalAt: new Date().valueOf() + 1000 * 60 * 60 * 24 * 4,
     },
   ],
 };
@@ -54,8 +54,10 @@ export const taskSlice = createSlice({
       (state.isComplete = false), (state.isNotComplete = !state.isNotComplete);
     },
     addTask: (state, action: PayloadAction<Partial<tasks>>) => {
-      (action.payload.id = state.tasks[state.tasks.length - 1].id + 1),
-        (action.payload.createdAt = new Date());
+      (action.payload.id =
+        (state.tasks.length > 0 ? state.tasks[state.tasks.length - 1].id : 1) +
+        1),
+        (action.payload.createdAt = new Date().valueOf());
       state.tasks.push(action.payload as tasks);
     },
     deleteTask: (state, action: PayloadAction<number>) => {
@@ -63,6 +65,14 @@ export const taskSlice = createSlice({
     },
     deleteCompletedTask: (state) => {
       state.tasks = state.tasks.filter((task) => task.complete === false);
+    },
+    checkTask: (state, action: PayloadAction<number>) => {
+      state.tasks[
+        state.tasks.findIndex((element) => element.id === action.payload)
+      ].complete =
+        !state.tasks[
+          state.tasks.findIndex((element) => element.id === action.payload)
+        ].complete;
     },
   },
 });
@@ -72,6 +82,7 @@ export const {
   checkNotComplete,
   deleteCompletedTask,
   addTask,
+  checkTask,
   deleteTask,
 } = taskSlice.actions;
 export const selectComplete = (state: AppState) => state.task.isComplete;

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { inThreeDay } from "../../utilities/date";
-import { deleteTask } from "../task/taskSlice";
+import { checkTask, deleteTask } from "../task/taskSlice";
 import styles from "./TodoItem.module.css";
 const TodoItem = ({ todoItem }) => {
   const dispatch = useAppDispatch();
@@ -11,11 +11,17 @@ const TodoItem = ({ todoItem }) => {
   // }, [todoItem, todoItem.goalAt, inThreeDay]);
   return (
     <div className={styles.todoBox}>
-      <input type="checkbox" checked={todoItem.complete} />
+      <input
+        type="checkbox"
+        onChange={() => {
+          dispatch(checkTask(todoItem.id));
+        }}
+        checked={todoItem.complete}
+      />
       <div
         style={{ textDecoration: todoItem.complete ? "line-through" : "none" }}
       >
-        {todoItem.goalAt && emergency ? "[긴급함]" : ""}
+        {emergency ? "[긴급함]" : ""}
         {todoItem.title}
       </div>
       <div className={styles.button}>
