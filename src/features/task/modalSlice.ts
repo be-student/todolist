@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { AppState } from "../../app/store";
 
+
 const initialState = {
   id: 0,
   title: "",
@@ -15,3 +16,6 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {},
 });
+
+export const selectId=(state:AppState)=>state.modal.id;
+export default modalSlice.reducer;
