@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { addFilter } from "../features/slice/pageSlice";
-import { selectTags } from "../features/slice/taskSlice";
+import { deleteTag, selectTags } from "../features/slice/taskSlice";
 const IndexPage: NextPage = () => {
   const dispatch = useAppDispatch();
   const tags = useAppSelector(selectTags);
@@ -20,10 +20,20 @@ const IndexPage: NextPage = () => {
               overflow: "no-wrap",
               marginRight: "0.5rem",
               borderRadius: "5px",
+              display: "flex",
+              justifyContent: "space-between",
             }}
             onClick={() => dispatch(addFilter(tag))}
           >
             {tag}
+            <button
+              onClick={(event) => {
+                event.stopPropagation();
+                dispatch(deleteTag(tag));
+              }}
+            >
+              제거하기
+            </button>
           </div>
         );
       })}

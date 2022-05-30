@@ -1,4 +1,10 @@
-import { SetStateAction, useEffect, useMemo, useState } from "react";
+import {
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useAppDispatch, useAppSelector, useInput } from "../../app/hooks";
 import styles from "./Modal.module.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -28,7 +34,7 @@ const Modal = () => {
   const [bg, setBg] = useState<string>("#FFFFFF");
   const [color, setColor] = useState<string>("#000000");
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     const result = confirm(
       "정말로 닫으시겠습니까? 저장되지 않은 데이터는 삭제됩니다"
     );
@@ -42,8 +48,8 @@ const Modal = () => {
       dispatch(setModal(false));
       return;
     }
-  };
-  const onSubmit = () => {
+  }, [dispatch, title, description, complete, goalAt]);
+  const onSubmit = useCallback(() => {
     if (title.value === "") {
       alert("please enter title");
       return;
@@ -76,7 +82,23 @@ const Modal = () => {
     }
     dispatch(setModal(false));
     dispatch(clearId());
-  };
+  }, [title, description, goalAt, complete, tagNow]);
+  const tagGenerator = useCallback(() => {
+    if (tagInput.value === "") {
+      alert("enter tag name");
+      return;
+    }
+    dispatch(
+      editTag({
+        title: tagInput.value,
+        color: color,
+        backgroundColor: bg,
+      })
+    );
+    if (tagNow.find((tag) => tag === tagInput.value) === undefined) {
+      setTag([...tagNow, tagInput.value]);
+    }
+  }, [tagInput, color, bg, tagNow]);
   useEffect(() => {
     if (id !== 0) {
       const index = tasks.findIndex((task) => task.id === id);
@@ -86,7 +108,7 @@ const Modal = () => {
       setGoalAt(new Date(tasks[index].goalAt));
       setTag(tasks[index].tag);
     }
-  }, [id, tasks]);
+  }, [id]);
   return (
     <div className={styles.ModalWrapper}>
       <div className={styles.ModalItem}>
@@ -147,26 +169,7 @@ const Modal = () => {
             value={bg}
             onChange={(e) => setBg(e.target.value)}
           />
-          <button
-            onClick={() => {
-              if (tagInput.value === "") {
-                alert("enter tag name");
-                return;
-              }
-              dispatch(
-                editTag({
-                  title: tagInput.value,
-                  color: color,
-                  backgroundColor: bg,
-                })
-              );
-              if (tagNow.find((tag) => tag === tagInput.value) === undefined) {
-                setTag([...tagNow, tagInput.value]);
-              }
-            }}
-          >
-            save
-          </button>
+          <button onClick={tagGenerator}>save</button>
         </div>
         <div className={styles.Button}>
           <span>Example</span>

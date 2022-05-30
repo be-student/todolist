@@ -110,6 +110,15 @@ export const taskSlice = createSlice({
         backgroundColor: action.payload.backgroundColor,
       };
     },
+    deleteTag: (state, action: PayloadAction<string>) => {
+      for (const key in state.tasks) {
+        state.tasks[key].tag = state.tasks[key].tag.filter(
+          (tag) => tag !== action.payload
+        );
+      }
+
+      delete state.tags[action.payload];
+    },
   },
 });
 
@@ -122,6 +131,7 @@ export const {
   checkTask,
   deleteTask,
   editTask,
+  deleteTag,
 } = taskSlice.actions;
 export const selectComplete = (state: AppState) => state.task.isComplete;
 export const selectTags = (state: AppState) => state.task.tags;
