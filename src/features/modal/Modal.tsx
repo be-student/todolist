@@ -1,19 +1,34 @@
-import { useMemo, useState } from "react";
-import { useAppDispatch, useInput } from "../../app/hooks";
+import { SetStateAction, useEffect, useMemo, useState } from "react";
+import { useAppDispatch, useAppSelector, useInput } from "../../app/hooks";
 import styles from "./Modal.module.css";
+import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "react-calendar";
+import DatePicker from "react-datepicker";
 import moment from "moment";
-import { addTask } from "../task/taskSlice";
-const Modal = ({ setModal }) => {
+import { addTask, editTask, selectTasks } from "../slice/taskSlice";
+import { clearId, selectId, setId, setModal } from "../slice/modalSlice";
+const Modal = () => {
   const dispatch = useAppDispatch();
+  const id = useAppSelector(selectId);
   const title = useInput("");
+  const tasks = useAppSelector(selectTasks);
   const [goalAt, setGoalAt] = useState<Date>(new Date());
   const description = useInput("");
   const [complete, setComplete] = useState<boolean>(false);
-  const Selector: JSX.Element = useMemo(
-    () => <Calendar value={goalAt} onChange={setGoalAt}></Calendar>,
-    [Calendar, goalAt, setGoalAt]
-  );
+  const onClose = () => {
+    const result = confirm(
+      "정말로 닫으시겠습니까? 저장되지 않은 데이터는 삭제됩니다"
+    );
+    if (result) {
+      dispatch(setId(0));
+      title.setValue("");
+      description.setValue("");
+      setComplete(false);
+      setGoalAt(new Date());
+      dispatch(setModal(false));
+      return;
+    }
+  };
   const onSubmit = () => {
     if (title.value === "") {
       alert("please enter title");
@@ -23,17 +38,40 @@ const Modal = ({ setModal }) => {
       alert("please enter description");
       return;
     }
-    dispatch(
-      addTask({
-        title: title.value,
-        description: description.value,
-        goalAt: goalAt.valueOf(),
-        Complete: complete,
-        tag: [],
-      })
-    );
-    setModal(false);
+    if (id === 0) {
+      dispatch(
+        addTask({
+          title: title.value,
+          description: description.value,
+          goalAt: goalAt.valueOf(),
+          complete,
+          tag: [],
+        })
+      );
+    } else {
+      dispatch(
+        editTask({
+          id,
+          title: title.value,
+          description: description.value,
+          goalAt: goalAt.valueOf(),
+          complete,
+          tag: [],
+        })
+      );
+    }
+    dispatch(setModal(false));
+    dispatch(clearId());
   };
+  useEffect(() => {
+    if (id !== 0) {
+      const index = tasks.findIndex((task) => task.id === id);
+      title.setValue(tasks[index].title);
+      description.setValue(tasks[index].description);
+      setComplete(tasks[index].complete);
+      setGoalAt(new Date(tasks[index].goalAt));
+    }
+  }, [id, tasks]);
   return (
     <div className={styles.ModalWrapper}>
       <div className={styles.ModalItem}>
@@ -47,7 +85,7 @@ const Modal = ({ setModal }) => {
             required
           />
         </div>
-        <div>
+        <div className={styles.Button}>
           <span>Description </span>
           <input
             value={description.value}
@@ -56,12 +94,17 @@ const Modal = ({ setModal }) => {
             required
           />
         </div>
-        <div style={{ height: "300px" }}>
-          <span>Goal {moment(goalAt).format("YYYY-MM-DD")}</span>
-          <Calendar value={goalAt} onChange={setGoalAt}></Calendar>
+        <div className={styles.Button}>
+          <span>Goal</span>
+          <div>
+            <DatePicker
+              selected={goalAt}
+              onChange={(date: SetStateAction<Date>) => setGoalAt(date)}
+            />
+          </div>
         </div>
 
-        <div>
+        <div className={styles.Button}>
           <span>Complete</span>
           <input
             checked={complete}
@@ -76,16 +119,8 @@ const Modal = ({ setModal }) => {
           <span>Tag</span>
         </div>
         <div></div>
-        <div>
-          <button onClick={onSubmit}>submit</button>
-        </div>
-        <button
-          type="button"
-          onClick={() => {
-            setModal(false);
-          }}
-          className={styles.Button}
-        >
+        <button onClick={onSubmit}>submit</button>
+        <button type="button" onClick={onClose}>
           Close
         </button>
       </div>
@@ -93,11 +128,3 @@ const Modal = ({ setModal }) => {
   );
 };
 export default Modal;
-
-//id: 1,
-//title: "first Task",
-//description: "task description",
-//tag: ["tag1", "tag2"],
-//complete: false,
-//createdAt: new Date(),
-//goalAt: new Date(new Date().valueOf() + 1000 * 60 * 60 * 24 * 2),

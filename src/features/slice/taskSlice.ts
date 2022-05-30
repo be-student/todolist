@@ -15,12 +15,14 @@ export interface tasks {
 export interface CheckedState {
   isComplete: boolean;
   isNotComplete: boolean;
+  id:number;
   tasks: Array<tasks>;
 }
 
 const initialState: CheckedState = {
   isComplete: false,
   isNotComplete: false,
+  id:2,
   tasks: [
     {
       id: 1,
@@ -54,9 +56,8 @@ export const taskSlice = createSlice({
       (state.isComplete = false), (state.isNotComplete = !state.isNotComplete);
     },
     addTask: (state, action: PayloadAction<Partial<tasks>>) => {
-      (action.payload.id =
-        (state.tasks.length > 0 ? state.tasks[state.tasks.length - 1].id : 1) +
-        1),
+      state.id++,
+      action.payload.id=state.id,
         (action.payload.createdAt = new Date().valueOf());
       state.tasks.push(action.payload as tasks);
     },
@@ -74,6 +75,14 @@ export const taskSlice = createSlice({
           state.tasks.findIndex((element) => element.id === action.payload)
         ].complete;
     },
+    editTask:(state,action:PayloadAction<Partial<tasks>>)=>{
+      console.log(action.payload);
+      const index=state.tasks.findIndex((element) => element.id === action.payload.id);
+      console.log(index);
+      for(const p in action.payload){
+        state.tasks[index][p]=action.payload[p];
+      }
+    }
   },
 });
 
@@ -84,6 +93,7 @@ export const {
   addTask,
   checkTask,
   deleteTask,
+  editTask
 } = taskSlice.actions;
 export const selectComplete = (state: AppState) => state.task.isComplete;
 export const selectNotComplete = (state: AppState) => state.task.isNotComplete;

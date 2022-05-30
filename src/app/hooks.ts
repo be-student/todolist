@@ -13,7 +13,7 @@ export const useInput = (initialValue: string) => {
     } = event;
     setValue(value);
   };
-  return { value, onChange };
+  return { value, setValue, onChange };
 };
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 

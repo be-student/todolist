@@ -1,13 +1,16 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { PlusButton } from "../components/Button";
 import Modal from "../features/modal/Modal";
+import { selectModal, setModal } from "../features/slice/modalSlice";
 import TodoList from "../features/todoList/TodoList";
 
 const IndexPage: NextPage = () => {
-  const [modal, setModal] = useState<Boolean>(false);
-  const [id, setId] = useState<number>(0);
+  const dispatch = useAppDispatch();
+  const modal = useAppSelector(selectModal);
+
   return (
     <div
       style={{
@@ -20,11 +23,11 @@ const IndexPage: NextPage = () => {
     >
       <PlusButton
         onClick={() => {
-          setModal(true);
+          dispatch(setModal(true));
         }}
       />
-      <TodoList type={null} setId={setId} />
-      {modal && <Modal setModal={setModal} />}
+      <TodoList filter={undefined} />
+      {modal && <Modal />}
     </div>
   );
 };

@@ -16,14 +16,16 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import taskReducer from "../features/task/taskSlice";
+import modalReducer from "../features/slice/modalSlice"
+import taskReducer from "../features/slice/taskSlice";
 
 const reducers = combineReducers({
   task: taskReducer,
+  modal:modalReducer,
 });
 
 const persistConfig = {
-  key: "test",
+  key: "todolist",
   storage,
   whitelist: ["task"],
 };

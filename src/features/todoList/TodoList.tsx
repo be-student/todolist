@@ -3,18 +3,18 @@ import {
   selectComplete,
   selectNotComplete,
   selectTasks,
-} from "../task/taskSlice";
+  tasks,
+} from "../slice/taskSlice";
 import TodoItem from "./TodoItem";
 import styles from "./TodoList.module.css";
-const TodoList = ({ type, setId }) => {
+const TodoList = ({ filter }) => {
   const todoList = useAppSelector(selectTasks);
   const checkComplete = useAppSelector(selectComplete);
   const checkNotComplete = useAppSelector(selectNotComplete);
-
   return (
     <div className={styles.todoListBox}>
       {todoList &&
-        todoList.map((todoItem) => {
+        [...todoList].sort(filter).map((todoItem) => {
           if (checkComplete && todoItem.complete === false) {
             return;
           }

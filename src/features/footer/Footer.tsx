@@ -5,7 +5,7 @@ import {
   deleteCompletedTask,
   selectComplete,
   selectNotComplete,
-} from "../task/taskSlice";
+} from "../slice/taskSlice";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
@@ -15,7 +15,7 @@ const Footer = () => {
   return (
     <div className={styles.footerBox}>
       <div className={styles.footerItem}>
-        미완료 일
+        미완 보기
         <input
           onChange={() => {
             dispatch(checkNotComplete());
@@ -25,7 +25,7 @@ const Footer = () => {
         ></input>
       </div>
       <div className={styles.footerItem}>
-        완료된 일
+        완료 보기
         <input
           onChange={() => {
             dispatch(checkComplete());
