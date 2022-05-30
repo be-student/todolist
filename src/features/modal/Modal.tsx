@@ -13,17 +13,21 @@ import {
 import { clearId, selectId, setId, setModal } from "../slice/modalSlice";
 const Modal = () => {
   const dispatch = useAppDispatch();
-  const tags = useAppSelector(selectTags);
+
+  const tags = useAppSelector(selectTags); //적용되어있는 모든 태그
+
   const id = useAppSelector(selectId);
   const title = useInput("");
+  const description = useInput("");
   const tasks = useAppSelector(selectTasks);
-  const [tag, setTag] = useState<Array<string>>([]);
-  const tagInput = useInput("");
+  const [complete, setComplete] = useState<boolean>(false);
+  const [goalAt, setGoalAt] = useState<Date>(new Date());
+  const [tagNow, setTag] = useState<Array<string>>([]); //현재 작업중인 task 의 태그
+
+  const tagInput = useInput(""); //input
   const [bg, setBg] = useState<string>("#FFFFFF");
   const [color, setColor] = useState<string>("#000000");
-  const [goalAt, setGoalAt] = useState<Date>(new Date());
-  const description = useInput("");
-  const [complete, setComplete] = useState<boolean>(false);
+
   const onClose = () => {
     const result = confirm(
       "정말로 닫으시겠습니까? 저장되지 않은 데이터는 삭제됩니다"
@@ -55,7 +59,7 @@ const Modal = () => {
           description: description.value,
           goalAt: goalAt.valueOf(),
           complete,
-          tag,
+          tag: tagNow,
         })
       );
     } else {
@@ -66,7 +70,7 @@ const Modal = () => {
           description: description.value,
           goalAt: goalAt.valueOf(),
           complete,
-          tag,
+          tag: tagNow,
         })
       );
     }
@@ -156,8 +160,8 @@ const Modal = () => {
                   backgroundColor: bg,
                 })
               );
-              if (tag.find((tag) => tag === tagInput.value) === undefined) {
-                setTag([...tag, tagInput.value]);
+              if (tagNow.find((tag) => tag === tagInput.value) === undefined) {
+                setTag([...tagNow, tagInput.value]);
               }
             }}
           >
@@ -180,7 +184,7 @@ const Modal = () => {
           </span>
         </div>
         <div>
-          {tag.map((Item) => {
+          {tagNow.map((Item) => {
             return (
               <span
                 style={{
@@ -193,7 +197,7 @@ const Modal = () => {
                 }}
                 key={Item}
                 onClick={() => {
-                  setTag(tag.filter((item) => item !== Item));
+                  setTag(tagNow.filter((item) => item !== Item));
                 }}
               >
                 {Item}
