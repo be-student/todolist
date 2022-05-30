@@ -1,11 +1,10 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { PlusButton } from "../components/Button";
 import Modal from "../features/modal/Modal";
 import { selectModal, setModal } from "../features/slice/modalSlice";
-import { selectFilter } from "../features/slice/pageSlice";
+import { clearFilter, selectFilter } from "../features/slice/pageSlice";
 import { tasks } from "../features/slice/taskSlice";
 import TodoList from "../features/todoList/TodoList";
 
@@ -37,6 +36,9 @@ const IndexPage: NextPage = () => {
           dispatch(setModal(true));
         }}
       />
+      <div onClick={() => dispatch(clearFilter())}>
+        {filter ? `현재 선택된  ${filter}제거` : ""}
+      </div>
       <TodoList
         filter={filterFunction}
         sort={(a: tasks, b: tasks) => a.goalAt - b.goalAt}
