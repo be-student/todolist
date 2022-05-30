@@ -17,6 +17,7 @@ import {
   selectTasks,
 } from "../slice/taskSlice";
 import { clearId, selectId, setId, setModal } from "../slice/modalSlice";
+import { StyledTag } from "../../styles/styledComponents";
 const Modal = () => {
   const dispatch = useAppDispatch();
 
@@ -173,18 +174,9 @@ const Modal = () => {
         </div>
         <div className={styles.Button}>
           <span>Example</span>
-          <span
-            style={{
-              color: color,
-              backgroundColor: bg,
-              boxSizing: "border-box",
-              padding: "0 0.5rem",
-              marginRight: "0.5rem",
-              borderRadius: "5px",
-            }}
-          >
+          <StyledTag color={color} background-color={bg}>
             {tagInput.value}
-          </span>
+          </StyledTag>
         </div>
         <div>
           {tagNow.map((Item) => {

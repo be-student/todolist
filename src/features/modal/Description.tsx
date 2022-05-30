@@ -2,6 +2,7 @@ import moment from "moment";
 import { useAppSelector } from "../../app/hooks";
 import styles from "./Description.module.css";
 import { selectTags } from "../slice/taskSlice";
+import { StyledTag } from "../../styles/styledComponents";
 export const Description = ({ todoItem, setDescription }) => {
   const tags = useAppSelector(selectTags);
   return (
@@ -20,19 +21,13 @@ export const Description = ({ todoItem, setDescription }) => {
         <h2>Tag</h2>
         <span>
           {todoItem.tag.map((tag: string) => (
-            <span
-              style={{
-                color: tags[tag].color,
-                backgroundColor: tags[tag].backgroundColor,
-                boxSizing: "border-box",
-                padding: "0 0.5rem",
-                marginRight: "0.5rem",
-                borderRadius: "5px",
-              }}
+            <StyledTag
+              color={tags[tag].color}
+              background-color={tags[tag].backgroundColor}
               key={tag}
             >
               {tag}
-            </span>
+            </StyledTag>
           ))}
         </span>
         <button onClick={() => setDescription(false)}>Close</button>

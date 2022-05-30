@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useCallback, useMemo, useState } from "react";
+import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { PlusButton } from "../components/Button";
 import Modal from "../features/modal/Modal";
