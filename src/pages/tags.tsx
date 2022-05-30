@@ -1,7 +1,9 @@
 import type { NextPage } from "next";
-import { useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { addFilter } from "../features/slice/pageSlice";
 import { selectTags } from "../features/slice/taskSlice";
 const IndexPage: NextPage = () => {
+  const dispatch = useAppDispatch();
   const tags = useAppSelector(selectTags);
   return (
     <span>
@@ -19,6 +21,7 @@ const IndexPage: NextPage = () => {
               marginRight: "0.5rem",
               borderRadius: "5px",
             }}
+            onClick={() => dispatch(addFilter(tag))}
           >
             {tag}
           </div>

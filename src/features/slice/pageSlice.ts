@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppState } from "../../app/store";
 
 const initialState = {
-  title: "tag1",
+  title: "",
 };
 export const pageSlice = createSlice({
   name: "page",
