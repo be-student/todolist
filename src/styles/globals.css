@@ -9,6 +9,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
+
 .content {
   max-width: 500px;
   min-width: 330px;
@@ -19,9 +20,18 @@ body {
   height: 100%;
   background-color: white;
 }
-button{
-  border:none;
+
+button {
+  border: none;
   text-align: center;
   border-radius: 5px;
-  padding: 0.5rem;  
+  padding: 0.5rem;
+}
+
+.tagDisplay {
+  box-sizing: "border-box";
+  padding: "0 0.5rem";
+  overflow: "no-wrap";
+  margin-right: "0.5rem";
+  border-radius: "5px";
 }

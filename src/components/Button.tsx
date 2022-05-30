@@ -14,17 +14,6 @@ export const HeaderButton = ({ children, to }) => {
 };
 
 export const PlusButton = ({ onClick }) => {
-  const dispatch = useAppDispatch();
-  const newTask = () => {
-    const newItem = {
-      title: "second Task",
-      description: "task2 description",
-      tag: ["tag2", "tag3"],
-      complete: true,
-      goalAt: new Date(new Date().valueOf() + 1000 * 60 * 60 * 24 * 2),
-    };
-    dispatch(addTask(newItem));
-  };
   return (
     <button onClick={onClick} className={styles.plusButton}>
       + plus

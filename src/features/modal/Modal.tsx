@@ -2,16 +2,25 @@ import { SetStateAction, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector, useInput } from "../../app/hooks";
 import styles from "./Modal.module.css";
 import "react-datepicker/dist/react-datepicker.css";
-import Calendar from "react-calendar";
 import DatePicker from "react-datepicker";
-import moment from "moment";
-import { addTask, editTask, selectTasks } from "../slice/taskSlice";
+import {
+  addTask,
+  editTag,
+  editTask,
+  selectTags,
+  selectTasks,
+} from "../slice/taskSlice";
 import { clearId, selectId, setId, setModal } from "../slice/modalSlice";
 const Modal = () => {
   const dispatch = useAppDispatch();
+  const tags = useAppSelector(selectTags);
   const id = useAppSelector(selectId);
   const title = useInput("");
   const tasks = useAppSelector(selectTasks);
+  const [tag, setTag] = useState<Array<string>>([]);
+  const tagInput = useInput("");
+  const [bg, setBg] = useState<string>("#FFFFFF");
+  const [color, setColor] = useState<string>("#000000");
   const [goalAt, setGoalAt] = useState<Date>(new Date());
   const description = useInput("");
   const [complete, setComplete] = useState<boolean>(false);
@@ -19,6 +28,7 @@ const Modal = () => {
     const result = confirm(
       "정말로 닫으시겠습니까? 저장되지 않은 데이터는 삭제됩니다"
     );
+    // const result = true;
     if (result) {
       dispatch(setId(0));
       title.setValue("");
@@ -45,7 +55,7 @@ const Modal = () => {
           description: description.value,
           goalAt: goalAt.valueOf(),
           complete,
-          tag: [],
+          tag,
         })
       );
     } else {
@@ -56,7 +66,7 @@ const Modal = () => {
           description: description.value,
           goalAt: goalAt.valueOf(),
           complete,
-          tag: [],
+          tag,
         })
       );
     }
@@ -70,6 +80,7 @@ const Modal = () => {
       description.setValue(tasks[index].description);
       setComplete(tasks[index].complete);
       setGoalAt(new Date(tasks[index].goalAt));
+      setTag(tasks[index].tag);
     }
   }, [id, tasks]);
   return (
@@ -115,10 +126,81 @@ const Modal = () => {
           />
         </div>
 
-        <div>
+        <div className={styles.Button}>
           <span>Tag</span>
+          <input
+            type="text"
+            value={tagInput.value}
+            onChange={tagInput.onChange}
+          />
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
+          <input
+            type="color"
+            value={bg}
+            onChange={(e) => setBg(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              if (tagInput.value === "") {
+                alert("enter tag name");
+                return;
+              }
+              dispatch(
+                editTag({
+                  title: tagInput.value,
+                  color: color,
+                  backgroundColor: bg,
+                })
+              );
+              if (tag.find((tag) => tag === tagInput.value) === undefined) {
+                setTag([...tag, tagInput.value]);
+              }
+            }}
+          >
+            save
+          </button>
         </div>
-        <div></div>
+        <div className={styles.Button}>
+          <span>Example</span>
+          <span
+            style={{
+              color: color,
+              backgroundColor: bg,
+              boxSizing: "border-box",
+              padding: "0 0.5rem",
+              marginRight: "0.5rem",
+              borderRadius: "5px",
+            }}
+          >
+            {tagInput.value}
+          </span>
+        </div>
+        <div>
+          {tag.map((Item) => {
+            return (
+              <span
+                style={{
+                  color: tags[Item].color,
+                  backgroundColor: tags[Item].backgroundColor,
+                  boxSizing: "border-box",
+                  padding: "0 0.5rem",
+                  marginRight: "0.5rem",
+                  borderRadius: "5px",
+                }}
+                key={Item}
+                onClick={() => {
+                  setTag(tag.filter((item) => item !== Item));
+                }}
+              >
+                {Item}
+              </span>
+            );
+          })}
+        </div>
         <button onClick={onSubmit}>submit</button>
         <button type="button" onClick={onClose}>
           Close

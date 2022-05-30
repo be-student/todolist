@@ -11,18 +11,27 @@ export interface tasks {
   createdAt: number;
   goalAt: number;
 }
+export interface tag {
+  backgroundColor: string;
+  color: string;
+}
+
+export interface tags {
+  [index: string]: tag;
+}
 
 export interface CheckedState {
   isComplete: boolean;
   isNotComplete: boolean;
-  id:number;
+  id: number;
   tasks: Array<tasks>;
+  tags: tags;
 }
 
 const initialState: CheckedState = {
   isComplete: false,
   isNotComplete: false,
-  id:2,
+  id: 2,
   tasks: [
     {
       id: 1,
@@ -43,6 +52,20 @@ const initialState: CheckedState = {
       goalAt: new Date().valueOf() + 1000 * 60 * 60 * 24 * 4,
     },
   ],
+  tags: {
+    tag1: {
+      backgroundColor: "#13579A",
+      color: "#975313",
+    },
+    tag2: {
+      backgroundColor: "#13579A",
+      color: "#975313",
+    },
+    tag3: {
+      backgroundColor: "#13579A",
+      color: "#975313",
+    },
+  },
 };
 
 export const taskSlice = createSlice({
@@ -57,7 +80,7 @@ export const taskSlice = createSlice({
     },
     addTask: (state, action: PayloadAction<Partial<tasks>>) => {
       state.id++,
-      action.payload.id=state.id,
+        (action.payload.id = state.id),
         (action.payload.createdAt = new Date().valueOf());
       state.tasks.push(action.payload as tasks);
     },
@@ -68,34 +91,40 @@ export const taskSlice = createSlice({
       state.tasks = state.tasks.filter((task) => task.complete === false);
     },
     checkTask: (state, action: PayloadAction<number>) => {
-      state.tasks[
-        state.tasks.findIndex((element) => element.id === action.payload)
-      ].complete =
-        !state.tasks[
-          state.tasks.findIndex((element) => element.id === action.payload)
-        ].complete;
+      const index = state.tasks.findIndex(
+        (element) => element.id === action.payload
+      );
+      state.tasks[index].complete = !state.tasks[index].complete;
     },
-    editTask:(state,action:PayloadAction<Partial<tasks>>)=>{
-      console.log(action.payload);
-      const index=state.tasks.findIndex((element) => element.id === action.payload.id);
-      console.log(index);
-      for(const p in action.payload){
-        state.tasks[index][p]=action.payload[p];
+    editTask: (state, action: PayloadAction<Partial<tasks>>) => {
+      const index = state.tasks.findIndex(
+        (element) => element.id === action.payload.id
+      );
+      for (const p in action.payload) {
+        state.tasks[index][p] = action.payload[p];
       }
-    }
+    },
+    editTag: (state, action: PayloadAction<any>) => {
+      state.tags[action.payload.title] = {
+        color: action.payload.color,
+        backgroundColor: action.payload.backgroundColor,
+      };
+    },
   },
 });
 
 export const {
   checkComplete,
   checkNotComplete,
+  editTag,
   deleteCompletedTask,
   addTask,
   checkTask,
   deleteTask,
-  editTask
+  editTask,
 } = taskSlice.actions;
 export const selectComplete = (state: AppState) => state.task.isComplete;
+export const selectTags = (state: AppState) => state.task.tags;
 export const selectNotComplete = (state: AppState) => state.task.isNotComplete;
 export const selectTasks = (state: AppState) => state.task.tasks;
 export default taskSlice.reducer;

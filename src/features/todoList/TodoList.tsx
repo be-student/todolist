@@ -3,26 +3,28 @@ import {
   selectComplete,
   selectNotComplete,
   selectTasks,
-  tasks,
 } from "../slice/taskSlice";
 import TodoItem from "./TodoItem";
 import styles from "./TodoList.module.css";
-const TodoList = ({ filter }) => {
+const TodoList = ({ filter, sort }) => {
   const todoList = useAppSelector(selectTasks);
   const checkComplete = useAppSelector(selectComplete);
   const checkNotComplete = useAppSelector(selectNotComplete);
   return (
     <div className={styles.todoListBox}>
       {todoList &&
-        [...todoList].sort(filter).map((todoItem) => {
-          if (checkComplete && todoItem.complete === false) {
-            return;
-          }
-          if (checkNotComplete && todoItem.complete === true) {
-            return;
-          }
-          return <TodoItem key={todoItem.id} todoItem={todoItem} />;
-        })}
+        [...todoList]
+          .filter(filter)
+          .sort(sort)
+          .map((todoItem) => {
+            if (checkComplete && todoItem.complete === false) {
+              return;
+            }
+            if (checkNotComplete && todoItem.complete === true) {
+              return;
+            }
+            return <TodoItem key={todoItem.id} todoItem={todoItem} />;
+          })}
     </div>
   );
 };
