@@ -105,7 +105,14 @@ const Modal = () => {
     }
   }, [id]);
   return (
-    <div className={styles.ModalWrapper}>
+    <div
+      className={styles.ModalWrapper}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+    >
       <div className={styles.ModalItem}>
         <h1 className={styles.Title}>Task</h1>
         <div className={styles.Button}>

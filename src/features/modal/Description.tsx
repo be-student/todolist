@@ -6,7 +6,14 @@ import { StyledTag } from "../../styles/styledComponents";
 export const Description = ({ todoItem, setDescription }) => {
   const tags = useAppSelector(selectTags);
   return (
-    <div className={styles.ModalWrapper}>
+    <div
+      className={styles.ModalWrapper}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          setDescription(false);
+        }
+      }}
+    >
       <div className={styles.ModalItem}>
         <h2>Title</h2>
         <span>{todoItem.title}</span>
