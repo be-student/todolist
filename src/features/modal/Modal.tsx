@@ -181,22 +181,16 @@ const Modal = () => {
         <div>
           {tagNow.map((Item) => {
             return (
-              <span
-                style={{
-                  color: tags[Item].color,
-                  backgroundColor: tags[Item].backgroundColor,
-                  boxSizing: "border-box",
-                  padding: "0 0.5rem",
-                  marginRight: "0.5rem",
-                  borderRadius: "5px",
-                }}
+              <StyledTag
+                color={tags[Item].color}
+                background-Color={tags[Item].backgroundColor}
                 key={Item}
                 onClick={() => {
                   setTag(tagNow.filter((item) => item !== Item));
                 }}
               >
                 {Item}
-              </span>
+              </StyledTag>
             );
           })}
         </div>
