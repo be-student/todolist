@@ -2,16 +2,19 @@ import type { NextPage } from "next";
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { PlusButton } from "../components/Button";
+import { Filter } from "../features/header/Filter";
 import Modal from "../features/modal/Modal";
 import { selectModal, setModal } from "../features/slice/modalSlice";
 import { clearFilter, selectFilter } from "../features/slice/pageSlice";
-import { tasks } from "../features/slice/taskSlice";
+import { selectTags, tasks } from "../features/slice/taskSlice";
 import TodoList from "../features/todoList/TodoList";
+import { StyledTag } from "../styles/styledComponents";
 
 const IndexPage: NextPage = () => {
   const dispatch = useAppDispatch();
   const modal = useAppSelector(selectModal);
   const filter = useAppSelector(selectFilter);
+  const tags = useAppSelector(selectTags);
   const filterFunction = useCallback(
     (item) => {
       if (filter === "") {
@@ -31,14 +34,19 @@ const IndexPage: NextPage = () => {
         width: "100%",
       }}
     >
+      {filter && (
+        <Filter
+          filter={filter}
+          color={tags[filter].color}
+          bg={tags[filter].backgroundColor}
+        />
+      )}
       <PlusButton
         onClick={() => {
           dispatch(setModal(true));
         }}
       />
-      <div onClick={() => dispatch(clearFilter())}>
-        {filter ? `현재 선택된  ${filter}제거` : ""}
-      </div>
+
       <TodoList
         filter={filterFunction}
         sort={(a: tasks, b: tasks) => a.goalAt - b.goalAt}

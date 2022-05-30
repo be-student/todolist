@@ -1,14 +1,27 @@
 import type { NextPage } from "next";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { addFilter } from "../features/slice/pageSlice";
+import { Filter } from "../features/header/Filter";
+import {
+  addFilter,
+  clearFilter,
+  selectFilter,
+} from "../features/slice/pageSlice";
 import { deleteTag, selectTags } from "../features/slice/taskSlice";
 import { StyledTag } from "../styles/styledComponents";
 
 const IndexPage: NextPage = () => {
   const dispatch = useAppDispatch();
+  const filter = useAppSelector(selectFilter);
   const tags = useAppSelector(selectTags);
   return (
     <span>
+      {filter && (
+        <Filter
+          filter={filter}
+          color={tags[filter].color}
+          bg={tags[filter].backgroundColor}
+        />
+      )}
       {Object.keys(tags).map((tag) => {
         return (
           <StyledTag
