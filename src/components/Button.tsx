@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { useAppDispatch } from "../app/hooks";
-import { addTask } from "../features/slice/taskSlice";
 import styles from "./Button.module.css";
 
 export const HeaderButton = ({ children, to }) => {

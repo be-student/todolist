@@ -110,6 +110,9 @@ export const taskSlice = createSlice({
         backgroundColor: action.payload.backgroundColor,
       };
     },
+    deleteTag: (state, action: PayloadAction<string>) => {
+      delete state.tags[action.payload];
+    },
   },
 });
 
@@ -122,6 +125,7 @@ export const {
   checkTask,
   deleteTask,
   editTask,
+  deleteTag,
 } = taskSlice.actions;
 export const selectComplete = (state: AppState) => state.task.isComplete;
 export const selectTags = (state: AppState) => state.task.tags;

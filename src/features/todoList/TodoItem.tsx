@@ -46,7 +46,6 @@ const TodoItem = ({ todoItem }) => {
             className={styles.buttonItem}
             onClick={() => {
               const result = confirm("정말로 삭제하시겠습니까?");
-              // const result = true;
               if (result) {
                 dispatch(deleteTask(todoItem.id));
               }

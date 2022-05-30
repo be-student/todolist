@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useAppSelector } from "../../app/hooks";
 import {
   selectComplete,
@@ -10,21 +11,21 @@ const TodoList = ({ filter, sort }) => {
   const todoList = useAppSelector(selectTasks);
   const checkComplete = useAppSelector(selectComplete);
   const checkNotComplete = useAppSelector(selectNotComplete);
+  const sortedTodo = useMemo(() => {
+    return [...todoList].filter(filter).sort(sort);
+  }, [filter, sort, todoList]);
   return (
     <div className={styles.todoListBox}>
       {todoList &&
-        [...todoList]
-          .filter(filter)
-          .sort(sort)
-          .map((todoItem) => {
-            if (checkComplete && todoItem.complete === false) {
-              return;
-            }
-            if (checkNotComplete && todoItem.complete === true) {
-              return;
-            }
-            return <TodoItem key={todoItem.id} todoItem={todoItem} />;
-          })}
+        sortedTodo.map((todoItem) => {
+          if (checkComplete && todoItem.complete === false) {
+            return;
+          }
+          if (checkNotComplete && todoItem.complete === true) {
+            return;
+          }
+          return <TodoItem key={todoItem.id} todoItem={todoItem} />;
+        })}
     </div>
   );
 };
