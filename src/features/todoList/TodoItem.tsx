@@ -1,4 +1,3 @@
-import moment from "moment";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { StyledTag } from "../../styles/styledComponents";
@@ -58,31 +57,9 @@ const TodoItem = ({ todoItem }) => {
       </div>
       <span>
         {todoItem.tag.map((tag: string) => (
-          // <span
-          //   style={{
-          //     color: tags[tag].color,
-          //     backgroundColor: tags[tag].backgroundColor,
-          //     boxSizing: "border-box",
-          //     padding: "0 0.5rem",
-          //     marginRight: "0.5rem",
-          //     borderRadius: "5px",
-          //   }}
-          //   key={tag}
-          //   onClick={() => dispatch(addFilter(tag))}
-          // >
-          //   {tag}
-          // </span>
           <StyledTag
             color={tags[tag].color}
             background-color={tags[tag].backgroundColor}
-            // style={{
-            //   color: tags[tag].color,
-            //   backgroundColor: tags[tag].backgroundColor,
-            //   boxSizing: "border-box",
-            //   padding: "0 0.5rem",
-            //   marginRight: "0.5rem",
-            //   borderRadius: "5px",
-            // }}
             key={tag}
             onClick={() => dispatch(addFilter(tag))}
           >

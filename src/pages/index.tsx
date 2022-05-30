@@ -1,15 +1,13 @@
 import type { NextPage } from "next";
-import { useCallback, useMemo, useState } from "react";
-import styled from "styled-components";
+import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { PlusButton } from "../components/Button";
 import { Filter } from "../features/header/Filter";
 import Modal from "../features/modal/Modal";
 import { selectModal, setModal } from "../features/slice/modalSlice";
-import { clearFilter, selectFilter } from "../features/slice/pageSlice";
+import { selectFilter } from "../features/slice/pageSlice";
 import { selectTags } from "../features/slice/taskSlice";
 import TodoList from "../features/todoList/TodoList";
-import { StyledTag } from "../styles/styledComponents";
 
 const IndexPage: NextPage = () => {
   const dispatch = useAppDispatch();

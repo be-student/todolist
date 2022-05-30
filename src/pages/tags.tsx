@@ -1,11 +1,7 @@
 import type { NextPage } from "next";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { Filter } from "../features/header/Filter";
-import {
-  addFilter,
-  clearFilter,
-  selectFilter,
-} from "../features/slice/pageSlice";
+import { addFilter, selectFilter } from "../features/slice/pageSlice";
 import { deleteTag, selectTags } from "../features/slice/taskSlice";
 import { StyledTag } from "../styles/styledComponents";
 
