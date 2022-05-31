@@ -7,7 +7,7 @@ import {
   selectFilter,
 } from "../features/slice/pageSlice";
 import { deleteTag, selectTags } from "../features/slice/taskSlice";
-import { StyledTag } from "../styles/styledComponents";
+import { StyledTag } from "../components/styledComponents";
 
 const IndexPage: NextPage = () => {
   const dispatch = useAppDispatch();

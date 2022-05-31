@@ -11,7 +11,7 @@ import {
   selectTasks,
 } from "../slice/taskSlice";
 import { clearId, selectId, setId, setModal } from "../slice/modalSlice";
-import { StyledTag } from "../../styles/styledComponents";
+import { StyledTag } from "../../components/styledComponents";
 const Modal = () => {
   const dispatch = useAppDispatch();
 

@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { StyledTag } from "../../styles/styledComponents";
+import { StyledTag } from "../../components/styledComponents";
 import { clearFilter } from "../slice/pageSlice";
 import { selectTags } from "../slice/taskSlice";
 

@@ -2,7 +2,7 @@ import moment from "moment";
 import { useAppSelector } from "../../app/hooks";
 import styles from "./Description.module.css";
 import { selectTags } from "../slice/taskSlice";
-import { StyledTag } from "../../styles/styledComponents";
+import { StyledTag } from "../../components/styledComponents";
 export const Description = ({ todoItem, setDescription }) => {
   const tags = useAppSelector(selectTags);
   return (

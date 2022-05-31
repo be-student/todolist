@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { StyledTag } from "../../styles/styledComponents";
+import { StyledTag } from "../../components/styledComponents";
 import { inThreeDay } from "../../utilities/date";
 import { Description } from "../modal/Description";
 import { setId, setModal } from "../slice/modalSlice";
