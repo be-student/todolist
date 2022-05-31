@@ -25,14 +25,16 @@ const TodoItem = ({ todoItem }) => {
   return (
     <TodoItemLayout>
       <TodoItemDescriptionLayout>
-        <input
+        <Checkbox />
+        {/* <input
           type="checkbox"
           onChange={() => {
             dispatch(checkTask(todoItem.id));
           }}
           checked={todoItem.complete}
-        />
-        <div
+        /> */}
+        {isUrgent && (<UrgentLabel />)}
+        {/* <div
           onClick={() => {
             setDescription(true);
           }}
@@ -42,7 +44,7 @@ const TodoItem = ({ todoItem }) => {
         >
           {emergency ? "[긴급함]" : ""}
           {todoItem.title}
-        </div>
+        </div> */}
         <TodoItemButton2>
           <TodoItemButton onClick={onEdit(todoItem.id)}>edit</TodoItemButton>
           <TodoItemButton

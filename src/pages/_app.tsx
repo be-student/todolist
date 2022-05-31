@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import type { AppProps } from "next/app";
 import store from "../features/redux/store";
 import Header from "../features/header/Header";
-import Footer from "../features/footer/Footer";
+import Footer from "../features/components/footer/Footer";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import { persistStore } from "redux-persist";
 import Head from "next/head";

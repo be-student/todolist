@@ -1,11 +1,11 @@
-import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import {
   checkComplete,
   checkNotComplete,
   deleteCompletedTask,
   selectComplete,
   selectNotComplete,
-} from "../redux/taskSlice";
+} from "../../redux/taskSlice";
 import { FooterBox, FooterButton, FooterItem } from "./FooterComponents";
 
 const Footer = () => {
