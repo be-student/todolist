@@ -1,7 +1,11 @@
 import type { NextPage } from "next";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { Filter } from "../features/header/Filter";
-import { addFilter, selectFilter } from "../features/slice/pageSlice";
+import {
+  addFilter,
+  clearFilter,
+  selectFilter,
+} from "../features/slice/pageSlice";
 import { deleteTag, selectTags } from "../features/slice/taskSlice";
 import { StyledTag } from "../styles/styledComponents";
 
@@ -36,6 +40,9 @@ const IndexPage: NextPage = () => {
               style={{ margin: "0.5rem 0.5rem" }}
               onClick={(event) => {
                 event.stopPropagation();
+                if (filter === tag) {
+                  dispatch(clearFilter());
+                }
                 dispatch(deleteTag(tag));
               }}
             >
