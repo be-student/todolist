@@ -1,20 +1,19 @@
 import moment from "moment";
-import { useAppSelector } from "../../app/hooks";
-import styles from "./Description.module.css";
-import { selectTags } from "../slice/taskSlice";
-import { StyledTag } from "../../components/styledComponents";
+import { useAppSelector } from "../hooks/hooks";
+import { selectTags } from "../redux/taskSlice";
+import { StyledTag } from "../components/StyledComponents";
+import { ModalItem, ModalWrapper } from "./ModalComponents";
 export const Description = ({ todoItem, setDescription }) => {
   const tags = useAppSelector(selectTags);
   return (
-    <div
-      className={styles.ModalWrapper}
+    <ModalWrapper
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           setDescription(false);
         }
       }}
     >
-      <div className={styles.ModalItem}>
+      <ModalItem>
         <h2>Title</h2>
         <span>{todoItem.title}</span>
         <h2>Description</h2>
@@ -38,7 +37,7 @@ export const Description = ({ todoItem, setDescription }) => {
           ))}
         </span>
         <button onClick={() => setDescription(false)}>Close</button>
-      </div>
-    </div>
+      </ModalItem>
+    </ModalWrapper>
   );
 };

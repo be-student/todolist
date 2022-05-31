@@ -16,9 +16,9 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import modalReducer from "../features/slice/modalSlice";
-import taskReducer from "../features/slice/taskSlice";
-import pageReducer from "../features/slice/pageSlice";
+import modalReducer from "./modalSlice";
+import taskReducer from "./taskSlice";
+import pageReducer from "./pageSlice";
 const reducers = combineReducers({
   task: taskReducer,
   modal: modalReducer,

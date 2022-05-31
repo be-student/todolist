@@ -1,13 +1,14 @@
 import type { NextPage } from "next";
 import { useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { PlusButton } from "../components/Button";
-import { Filter } from "../features/header/Filter";
+import { useAppDispatch, useAppSelector } from "../features/hooks/hooks";
+import { AddTaskButton } from "../features/components/Button";
+import { Filter } from "../features/components/Filter";
 import Modal from "../features/modal/Modal";
-import { selectModal, setModal } from "../features/slice/modalSlice";
-import { selectFilter } from "../features/slice/pageSlice";
-import { selectTags, tasks } from "../features/slice/taskSlice";
+import { selectModal, setModal } from "../features/redux/modalSlice";
+import { selectFilter } from "../features/redux/pageSlice";
+import { selectTags, tasks } from "../features/redux/taskSlice";
 import TodoList from "../features/todoList/TodoList";
+import { PageLayout } from "../features/components/StyledComponents";
 
 const IndexPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -24,15 +25,7 @@ const IndexPage: NextPage = () => {
     [filter]
   );
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        height: "100%",
-        width: "100%",
-      }}
-    >
+    <PageLayout>
       {filter && (
         <Filter
           filter={filter}
@@ -41,7 +34,7 @@ const IndexPage: NextPage = () => {
         />
       )}
 
-      <PlusButton
+      <AddTaskButton
         onClick={() => {
           dispatch(setModal(true));
         }}
@@ -51,7 +44,7 @@ const IndexPage: NextPage = () => {
         sort={(a: tasks, b: tasks) => a.createdAt - b.createdAt}
       />
       {modal && <Modal />}
-    </div>
+    </PageLayout>
   );
 };
 

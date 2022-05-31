@@ -1,11 +1,9 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { StyledTag } from "../../components/styledComponents";
-import { clearFilter } from "../slice/pageSlice";
-import { selectTags } from "../slice/taskSlice";
+import { useAppDispatch } from "../hooks/hooks";
+import { StyledTag } from "./StyledComponents";
+import { clearFilter } from "../redux/pageSlice";
 
 export const Filter = ({ filter, color, bg }) => {
   const dispatch = useAppDispatch();
-  const tags = useAppSelector(selectTags);
   if (filter === undefined || "") {
     return;
   }

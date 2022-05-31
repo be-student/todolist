@@ -1,12 +1,12 @@
 import { useMemo } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../hooks/hooks";
 import {
   selectComplete,
   selectNotComplete,
   selectTasks,
-} from "../slice/taskSlice";
+} from "../redux/taskSlice";
+import { TodoListLayout } from "./TodoComponents";
 import TodoItem from "./TodoItem";
-import styles from "./TodoList.module.css";
 const TodoList = ({ filter, sort }) => {
   const todoList = useAppSelector(selectTasks);
   const checkComplete = useAppSelector(selectComplete);
@@ -15,7 +15,7 @@ const TodoList = ({ filter, sort }) => {
     return [...todoList].filter(filter).sort(sort);
   }, [filter, sort, todoList]);
   return (
-    <div className={styles.todoListBox}>
+    <TodoListLayout>
       {todoList &&
         sortedTodo.map((todoItem) => {
           if (checkComplete && todoItem.complete === false) {
@@ -26,7 +26,7 @@ const TodoList = ({ filter, sort }) => {
           }
           return <TodoItem key={todoItem.id} todoItem={todoItem} />;
         })}
-    </div>
+    </TodoListLayout>
   );
 };
 export default TodoList;

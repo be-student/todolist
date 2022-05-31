@@ -1,6 +1,5 @@
 import { SetStateAction, useCallback, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector, useInput } from "../../app/hooks";
-import styles from "./Modal.module.css";
+import { useAppDispatch, useAppSelector, useInput } from "../hooks/hooks";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import {
@@ -9,9 +8,15 @@ import {
   editTask,
   selectTags,
   selectTasks,
-} from "../slice/taskSlice";
-import { clearId, selectId, setId, setModal } from "../slice/modalSlice";
-import { StyledTag } from "../../components/styledComponents";
+} from "../redux/taskSlice";
+import { clearId, selectId, setId, setModal } from "../redux/modalSlice";
+import { StyledTag } from "../components/StyledComponents";
+import {
+  ModalButton,
+  ModalItem,
+  ModalTitle,
+  ModalWrapper,
+} from "./ModalComponents";
 const Modal = () => {
   const dispatch = useAppDispatch();
 
@@ -105,17 +110,16 @@ const Modal = () => {
     }
   }, [id]);
   return (
-    <div
-      className={styles.ModalWrapper}
+    <ModalWrapper
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();
         }
       }}
     >
-      <div className={styles.ModalItem}>
-        <h1 className={styles.Title}>Task</h1>
-        <div className={styles.Button}>
+      <ModalItem>
+        <ModalTitle>Task</ModalTitle>
+        <ModalButton>
           <span>Title </span>
           <input
             value={title.value}
@@ -123,8 +127,8 @@ const Modal = () => {
             type="text"
             required
           />
-        </div>
-        <div className={styles.Button}>
+        </ModalButton>
+        <ModalButton>
           <span>Description </span>
           <input
             value={description.value}
@@ -132,8 +136,8 @@ const Modal = () => {
             type="text"
             required
           />
-        </div>
-        <div className={styles.Button}>
+        </ModalButton>
+        <ModalButton>
           <span>Goal</span>
           <div>
             <DatePicker
@@ -141,9 +145,9 @@ const Modal = () => {
               onChange={(date: SetStateAction<Date>) => setGoalAt(date)}
             />
           </div>
-        </div>
+        </ModalButton>
 
-        <div className={styles.Button}>
+        <ModalButton>
           <span>Complete</span>
           <input
             checked={complete}
@@ -152,9 +156,9 @@ const Modal = () => {
             }}
             type="checkbox"
           />
-        </div>
+        </ModalButton>
 
-        <div className={styles.Button}>
+        <ModalButton>
           <span>Tag</span>
           <input
             type="text"
@@ -172,13 +176,13 @@ const Modal = () => {
             onChange={(e) => setBg(e.target.value)}
           />
           <button onClick={tagGenerator}>save</button>
-        </div>
-        <div className={styles.Button}>
+        </ModalButton>
+        <ModalButton>
           <span>Example</span>
           <StyledTag color={color} background-color={bg}>
             {tagInput.value}
           </StyledTag>
-        </div>
+        </ModalButton>
         <div>
           {tagNow.map((Item) => {
             return (
@@ -199,8 +203,8 @@ const Modal = () => {
         <button type="button" onClick={onClose}>
           Close
         </button>
-      </div>
-    </div>
+      </ModalItem>
+    </ModalWrapper>
   );
 };
 export default Modal;

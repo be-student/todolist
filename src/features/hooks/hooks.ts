@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
-import type { AppDispatch, AppState } from "./store";
+import type { AppDispatch, AppState } from "../redux/store";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useInput = (initialValue: string) => {

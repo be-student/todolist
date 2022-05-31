@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import type { AppState } from "../../app/store";
+import type { AppState } from "./store";
 
 export interface tasks {
   id: number;

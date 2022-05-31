@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { StyledTag } from "../../components/styledComponents";
-import { inThreeDay } from "../../utilities/date";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import {
+  TodoItemButton,
+  TodoItemButton2,
+  TodoItemDescriptionLayout,
+  TodoItemLayout,
+} from "./TodoComponents";
+import { inThreeDay } from "../utilities/date";
 import { Description } from "../modal/Description";
-import { setId, setModal } from "../slice/modalSlice";
-import { addFilter } from "../slice/pageSlice";
-import { checkTask, deleteTask, selectTags } from "../slice/taskSlice";
-import styles from "./TodoItem.module.css";
+import { setId, setModal } from "../redux/modalSlice";
+import { addFilter } from "../redux/pageSlice";
+import { checkTask, deleteTask, selectTags } from "../redux/taskSlice";
+import { StyledTag } from "../components/StyledComponents";
 
 const TodoItem = ({ todoItem }) => {
   const dispatch = useAppDispatch();
@@ -18,8 +23,8 @@ const TodoItem = ({ todoItem }) => {
     dispatch(setId(id));
   };
   return (
-    <div className={styles.todoBox}>
-      <div className={styles.todoItem}>
+    <TodoItemLayout>
+      <TodoItemDescriptionLayout>
         <input
           type="checkbox"
           onChange={() => {
@@ -38,12 +43,9 @@ const TodoItem = ({ todoItem }) => {
           {emergency ? "[긴급함]" : ""}
           {todoItem.title}
         </div>
-        <div className={styles.button}>
-          <button onClick={onEdit(todoItem.id)} className={styles.buttonItem}>
-            edit
-          </button>
-          <button
-            className={styles.buttonItem}
+        <TodoItemButton2>
+          <TodoItemButton onClick={onEdit(todoItem.id)}>edit</TodoItemButton>
+          <TodoItemButton
             onClick={() => {
               const result = confirm("정말로 삭제하시겠습니까?");
               if (result) {
@@ -52,9 +54,9 @@ const TodoItem = ({ todoItem }) => {
             }}
           >
             delete
-          </button>
-        </div>
-      </div>
+          </TodoItemButton>
+        </TodoItemButton2>
+      </TodoItemDescriptionLayout>
       <span>
         {todoItem.tag.map((tag: string) => (
           <StyledTag
@@ -70,7 +72,7 @@ const TodoItem = ({ todoItem }) => {
       {description && (
         <Description setDescription={setDescription} todoItem={todoItem} />
       )}
-    </div>
+    </TodoItemLayout>
   );
 };
 export default TodoItem;

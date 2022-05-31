@@ -1,20 +1,20 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import {
   checkComplete,
   checkNotComplete,
   deleteCompletedTask,
   selectComplete,
   selectNotComplete,
-} from "../slice/taskSlice";
-import styles from "./Footer.module.css";
+} from "../redux/taskSlice";
+import { FooterBox, FooterButton, FooterItem } from "./FooterComponents";
 
 const Footer = () => {
   const dispatch = useAppDispatch();
   const complete = useAppSelector(selectComplete);
   const notComplete = useAppSelector(selectNotComplete);
   return (
-    <div className={styles.footerBox}>
-      <div className={styles.footerItem}>
+    <FooterBox>
+      <FooterItem>
         미완 보기
         <input
           onChange={() => {
@@ -23,8 +23,8 @@ const Footer = () => {
           checked={notComplete}
           type="checkbox"
         ></input>
-      </div>
-      <div className={styles.footerItem}>
+      </FooterItem>
+      <FooterItem>
         완료 보기
         <input
           onChange={() => {
@@ -33,16 +33,15 @@ const Footer = () => {
           checked={complete}
           type="checkbox"
         ></input>
-      </div>
-      <button
+      </FooterItem>
+      <FooterButton
         onClick={() => {
           dispatch(deleteCompletedTask());
         }}
-        className={styles.footerItem}
       >
         제거 완료
-      </button>
-    </div>
+      </FooterButton>
+    </FooterBox>
   );
 };
 export default Footer;

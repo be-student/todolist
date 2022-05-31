@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { Filter } from "../features/header/Filter";
+import { useAppDispatch, useAppSelector } from "../features/hooks/hooks";
+import { Filter } from "../features/components/Filter";
 import {
   addFilter,
   clearFilter,
   selectFilter,
-} from "../features/slice/pageSlice";
-import { deleteTag, selectTags } from "../features/slice/taskSlice";
-import { StyledTag } from "../components/styledComponents";
+} from "../features/redux/pageSlice";
+import { deleteTag, selectTags } from "../features/redux/taskSlice";
+import { StyledTagPage } from "../features/components/StyledComponents";
 
 const IndexPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -24,20 +24,14 @@ const IndexPage: NextPage = () => {
       )}
       {Object.keys(tags).map((tag) => {
         return (
-          <StyledTag
+          <StyledTagPage
             key={tag}
             color={tags[tag].color}
             background-color={tags[tag].backgroundColor}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
             onClick={() => dispatch(addFilter(tag))}
           >
             {tag}
             <button
-              style={{ margin: "0.5rem 0.5rem" }}
               onClick={(event) => {
                 event.stopPropagation();
                 if (filter === tag) {
@@ -48,7 +42,7 @@ const IndexPage: NextPage = () => {
             >
               제거하기
             </button>
-          </StyledTag>
+          </StyledTagPage>
         );
       })}
     </span>
